@@ -9,6 +9,14 @@ import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_toolbar.*
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.fragment.app.Fragment
+
 
 //참고사이트
 //https://bongcando.tistory.com/entry/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-DrawerLayout%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%B4%EC%84%9C-%EB%A9%94%EB%89%B4%EB%A5%BC-%EB%A7%8C%EB%93%A4%EC%96%B4%EB%B3%B4%EC%9E%90
@@ -29,6 +37,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         var navigationView : NavigationView = findViewById(R.id.main_navigation);
         navigationView.setNavigationItemSelectedListener(this)
 
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_fragment,HomeFragment())
+            .commit()
 
     }
 
@@ -42,8 +53,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
         when(item.itemId){
-            R.id.item1-> Toast.makeText(this,"item1 clicked",Toast.LENGTH_SHORT).show()
+            R.id.item1-> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_fragment,OneFragment())
+                    .commit()
+            }
             R.id.item2-> Toast.makeText(this,"item2 clicked",Toast.LENGTH_SHORT).show()
             R.id.item3-> Toast.makeText(this,"item3 clicked",Toast.LENGTH_SHORT).show()
         }

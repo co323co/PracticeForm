@@ -1,4 +1,4 @@
-package com.example.practiceform
+package com.example.practiceform.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

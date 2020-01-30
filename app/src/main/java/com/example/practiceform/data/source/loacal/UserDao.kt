@@ -1,9 +1,10 @@
-package com.example.practiceform
+package com.example.practiceform.data.source.loacal
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.practiceform.data.User
 
 @Dao
 interface UserDao {

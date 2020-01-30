@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         var navigationView : NavigationView = findViewById(R.id.main_navigation);
         navigationView.setNavigationItemSelectedListener(this)
 
+        //초기 진입시 HomeFragment
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_fragment,HomeFragment())
             .commit()
@@ -54,14 +55,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
+        //TODO 그 뒤로가면 다른 화면 뜨게 해주는 것 구현(그림 연결되어있던거)
         when(item.itemId){
+
+            R.id.home-> {
+                supportFragmentManager.beginTransaction()
+                .replace(R.id.main_fragment,HomeFragment())
+                .commit()
+            }
             R.id.item1-> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_fragment,OneFragment())
                     .commit()
             }
-            R.id.item2-> Toast.makeText(this,"item2 clicked",Toast.LENGTH_SHORT).show()
-            R.id.item3-> Toast.makeText(this,"item3 clicked",Toast.LENGTH_SHORT).show()
+            R.id.item2-> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_fragment,TwoFragment())
+                    .commit()
+            }
+            R.id.item3-> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_fragment,ThreeFragment())
+                    .commit()
+            }
         }
         return false
     }

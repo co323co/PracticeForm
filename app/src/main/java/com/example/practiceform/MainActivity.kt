@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // 툴바에 타이틀 안보이게
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        var navigationView : NavigationView = findViewById(R.id.main_navigation);
+        val navigationView : NavigationView = findViewById(R.id.main_navigation);
         navigationView.setNavigationItemSelectedListener(this)
 
         //초기 진입시 HomeFragment

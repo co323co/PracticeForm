@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/tv_item_UserID"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="ID"
@@ -37,5 +37,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_item_UserID"
         app:layout_constraintTop_toBottomOf="@+id/tv_item_FirstName" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_update"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:insetLeft="8dp"
+        android:insetTop="8dp"
+        android:insetRight="8dp"
+        android:insetBottom="8dp"
+        android:text="수정"
+        app:layout_constraintEnd_toStartOf="@+id/btn_delete"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_delete"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:insetLeft="8dp"
+        android:insetTop="8dp"
+        android:insetRight="8dp"
+        android:insetBottom="8dp"
+        android:text="삭제"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,6 +18,9 @@ interface UserDao {
             "last_name LIKE :last LIMIT 1")
     fun findByName(first: String, last: String): User
 
+    @Query("SELECT * FROM user WHERE first_name Like :keword OR last_name LIKE :keword")
+    fun findByKeword(keword : String): List<User>
+
     @Insert
     fun insertOne(user: User)
 
@@ -32,12 +35,5 @@ interface UserDao {
 
     @Query("UPDATE user SET first_name=:first, last_name=:last WHERE uid LIKE :uid")
     fun update(uid:Int?, first:String, last:String)
-    //@Query("Set = '1000'")
-    //fun setIdZero()
 
-    /*
-    fun test() {
-        Toast.makeText(App.context(),"userDao 메소드 호출 성공", Toast.LENGTH_SHORT).show()
-    }
-    */
 }

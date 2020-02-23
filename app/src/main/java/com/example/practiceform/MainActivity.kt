@@ -1,13 +1,19 @@
 package com.example.practiceform
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_toolbar.*
+import kotlinx.android.synthetic.main.search_dialog.view.*
 
 
 //참고사이트
@@ -36,10 +42,53 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
+    //툴바의 메뉴(-아이콘) 버튼이 클릭 됐을 때 콜백
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home->{ // 메뉴 버튼
-                drawer_layout.openDrawer(GravityCompat.START)    // 네비게이션 드로어 열기
+                drawer_layout.openDrawer(GravityCompat.START)    // 네비게이션 드로어 열기//
+            }
+            R.id.menu_search->{ // 검색 버튼
+                //Toast.makeText(applicationContext,"서치 클릭",Toast.LENGTH_LONG).show()
+
+                //액티비티에서는 바로 getSystemService, 프래그먼트에서는 activitiy.getSystemService, 다른 곳에서는 컨텍스트.getSystemService
+                val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                val view = inflater.inflate(R.layout.search_dialog, null)
+                val alertDialog = AlertDialog.Builder(this)
+                    .setTitle("검색")
+                    .setPositiveButton("확인") { dialog, which ->
+                        var search : String = view.et_search.text.toString()
+
+                        val fragment: Fragment = HomeFragment() // Fragment 생성
+                        val bundle = Bundle(1) // 파라미터는 전달할 데이터 개수
+                        bundle.putString("search", search) // key , value
+                        fragment.setArguments(bundle)
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.main_fragment,fragment)
+                            .commit()
+                    }
+                    .setNeutralButton("취소", null)
+                    .create()
+                alertDialog.setView(view)
+                alertDialog.show()
+
+                /*
+                val builder: androidx.appcompat.app.AlertDialog.Builder? = androidx.appcompat.app.AlertDialog.Builder(applicationContext)
+                var inflater : LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                var view : View = inflater.inflate(R.layout.search_dialog,null)
+
+                builder?.setView(view)
+                Toast.makeText(applicationContext,"셋 뷰",Toast.LENGTH_LONG).show()
+                builder?.setTitle("검색")
+                builder?.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, id ->
+
+                })
+                builder?.setNegativeButton("NO", DialogInterface.OnClickListener { dialog, id ->
+                    // User clicked OK button
+                })
+                val dialog = builder?.create()
+                dialog?.show()
+                 */
             }
         }
         return super.onOptionsItemSelected(item)
@@ -85,4 +134,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
+
+    //툴바 메뉴 버튼을 설정
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
 }

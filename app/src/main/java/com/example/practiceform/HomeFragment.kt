@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,10 +32,16 @@ class HomeFragment() : Fragment() {
  */
 
     lateinit var homeView : View
+    var searchKey : String?  = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-
+        if(arguments!=null)
+        {
+            searchKey = arguments!!.getString("search",null)
+            //Toast.makeText(App.context(),searchKey,Toast.LENGTH_SHORT).show()
+        }
         // Inflate the layout for this fragment
         val rootView =  inflater.inflate(R.layout.fragment_home, container, false)
 
@@ -52,10 +59,17 @@ class HomeFragment() : Fragment() {
         val rvAdapter = UserAdapter(userList, context as Context)
         rv.adapter = rvAdapter
         rv.layoutManager = LinearLayoutManager(App.context()) as RecyclerView.LayoutManager
-
         var appDB=AppDatabase.getInstance(App.context())
         var userDao = appDB?.userDao()
-        rvAdapter.refresh()
+        if(searchKey==null)
+        {
+            rvAdapter.refresh()
+
+        }
+        else
+        {
+            rvAdapter.search(searchKey)
+        }
 
 
         /*
@@ -84,9 +98,9 @@ class HomeFragment() : Fragment() {
 
 
 
-        val btn =homeView.findViewById<Button>(R.id.btn_main_insert)
+        val addBtn =homeView.findViewById<Button>(R.id.btn_main_insert)
 
-        btn.setOnClickListener {
+        addBtn.setOnClickListener {
 
             val FirstName = homeView.findViewById<TextInputEditText>(R.id.et_FirstName).text.toString()
             val LastName = homeView.findViewById<TextInputEditText>(R.id.et_LastName).text.toString()
@@ -188,7 +202,14 @@ class HomeFragment() : Fragment() {
             val users = appDB?.userDao()?.getAll() as ArrayList<User>
             userList.addAll(users)
             notifyDataSetChanged()
-
+        }
+        fun search(keyWord:String?)
+        {
+            if(keyWord==null) return
+            userList.clear()
+            val users = appDB?.userDao()?.findByKeword(keyWord) as ArrayList<User>
+            userList.addAll(users)
+            notifyDataSetChanged()
         }
     }
 

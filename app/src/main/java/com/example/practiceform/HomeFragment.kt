@@ -50,11 +50,6 @@ class HomeFragment() : Fragment() {
         val userList = ArrayList<User>()
         rv.setHasFixedSize(true)
         val rvAdapter = UserAdapter(userList, context as Context)
-        // 개강언제야일은 개강전까지? 아니 나 27일이면 일끝나서 그떄부터 빡쥡중가능 그때부터 태영이만나러갈거같은데 같..ㅇ..공부..ㅈ ㅓ어차피 오빠도 정처기해야함 3.22에시험이니까
-        // ㅇㅎ 오키오키 그럼 정처기 음 한달전부턴 과제없ㄴㄴㄱㅊ  정처기 막판 일주일만 스퍼트함 쌉가능 ㅇㅋ 믿음직스럽네 그럼 이거는 노력해서빨리끝내봐 네,,,ㅠㅠㅠ얼이ㅕ웡이거 일은
-        // 머냐 늦게까지 하는게 끈나는날까지? 머가?  앙니ㅝ ㄴ갸래 1ㅅ기ㅑㅇㄲ ㅏㅈ2ㅣ7 걍 27에 일 아예끝나 아닝 1시에끝ㅌ나던거 지금 ㄴ연장햇다메 ㅇㅇ그거 27일까지쭉? ㄹㄹㅇㅇㅇ
-        // ㅇㅋㅇㅋ 그거감안해줄게 ㅠㅠㄳ해여 스승님그래그래 나인제자러갈게 나도자야겟다 뱌뱌 잛자ㅏ고 발 잘닦아
-        //냄시나니꼐 응응 너만날때만 안씻고갈게 우자울제가잘못했어요 그래 알았다. 봐줄게 우웩발앰싴ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ ㅂㅂㅂㅂ
         rv.adapter = rvAdapter
         rv.layoutManager = LinearLayoutManager(App.context()) as RecyclerView.LayoutManager
 
@@ -149,7 +144,6 @@ class HomeFragment() : Fragment() {
 
             holder.itemView.btn_update.setOnClickListener {
 
-
                 val builder: androidx.appcompat.app.AlertDialog.Builder? = androidx.appcompat.app.AlertDialog.Builder(context)
                 var inflater : LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
                 var view : View = inflater.inflate(R.layout.update_dialog,null)
@@ -157,7 +151,17 @@ class HomeFragment() : Fragment() {
                 builder?.setView(view)
                 builder?.setTitle("수정")
                 builder?.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, id ->
-                    //mFirstName = view.et_update_FirstName.text.toString()
+
+                    var appDB=AppDatabase.getInstance(App.context())
+                    var userDao = appDB?.userDao()
+
+                    var FirstName = view.et_update_FirstName.text.toString()
+                    var LastName = view.et_update_LastName.text.toString()
+                    val uid = userList[position].uid
+                    userDao?.update(uid,FirstName,LastName)
+
+                    refresh()
+
 
                 })
                 builder?.setNegativeButton("NO", DialogInterface.OnClickListener { dialog, id ->

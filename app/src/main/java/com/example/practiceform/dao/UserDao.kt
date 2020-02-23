@@ -30,6 +30,8 @@ interface UserDao {
     @Query("DELETE FROM user")
     fun deleteAll()
 
+    @Query("UPDATE user SET first_name=:first, last_name=:last WHERE uid LIKE :uid")
+    fun update(uid:Int?, first:String, last:String)
     //@Query("Set = '1000'")
     //fun setIdZero()
 
